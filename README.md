@@ -1,86 +1,73 @@
-Online Bookstore Database Management System (DBMS)
-This repository contains the SQL scripts for setting up and querying a basic Online Bookstore database. It serves as a practical example for demonstrating database design, data manipulation (DML), and a variety of advanced query techniques (DQL) including joins, aggregate functions, subqueries, and window functions.
+# 🚀 Online Bookstore Database Management System (DBMS)
 
-Files in This Repository
-File Name	Description	SQL Focus
-schema.sql	Defines the database structure, including all tables, primary keys, foreign keys, and constraints (CHECK, UNIQUE).	Data Definition Language (DDL)
-data.sql	Populates the database with sample data for authors, books, customers, and initial orders.	Data Manipulation Language (DML)
-queries.sql	A comprehensive collection of organized SQL queries to interact with the data, grouped by complexity.	Data Query Language (DQL)
+-----
 
-Export to Sheets
-Database Schema Overview
-The database is designed with five key tables to manage the core aspects of an online bookstore.
+## PROJECT OVERVIEW: SQL Mastery in Practice
 
-Table Name	Description	Relationships
-Authors	Stores details about the authors.	PK: AuthorID
-Books	Stores book inventory details (title, genre, price, stock).	PK: BookID, FK: AuthorID (References Authors)
-Customers	Stores information about registered users.	PK: CustomerID
-Orders	Stores high-level order information (date, total amount).	PK: OrderID, FK: CustomerID (References Customers)
-OrderDetails	Stores line-item details for each order (which book, quantity, price at purchase).	PK: OrderDetailID, FK: OrderID (References Orders), FK: BookID (References Books)
+This repository showcases a robust, fully-featured SQL project designed to manage an **Online Bookstore**. It goes beyond basic CRUD operations to demonstrate advanced database design, data integrity enforcement, and complex analytical querying. This is a comprehensive solution covering the entire database lifecycle from schema definition to sophisticated data reporting.
 
-Export to Sheets
-Getting Started
-To explore this project, follow these steps:
+-----
 
-Setup Database: Ensure you have a compatible SQL database environment (e.g., MySQL, PostgreSQL) installed and running.
+## 🎯 IMPRESSIVE HIGHLIGHTS
 
-Create Schema: Execute the contents of schema.sql to create the OnlineBookstore database and all necessary tables.
+| Feature | Description | File |
+| :--- | :--- | :--- |
+| **Complete Database Lifecycle** | Full demonstration of **DDL, DML, and Advanced DQL**—from table creation to complex reporting. | All files |
+| **Robust Data Integrity** | Schema includes Primary Keys, Foreign Keys, `UNIQUE` constraints (for `Email`), and **`CHECK` constraints** (for `Price` and `StockQuantity`). | `schema.sql` |
+| **Advanced Reporting & Analytics** | Utilization of **Window Functions** (`RANK()`, `ROW_NUMBER()`) for crucial business insights like customer spending rank and sales partitioning. | `queries.sql` |
+| **Revenue Calculation** | Complex queries for determining **Total Revenue by Genre** and calculating the **Average Order Value**. | `queries.sql` |
+| **Optimized Query Structures** | Effective use of **`JOIN`** operations, **`GROUP BY`** / **`HAVING`** clauses, and **`VIEWS`** to structure reusable, high-performance reports. | `queries.sql` |
 
-SQL
+-----
 
--- Example command for MySQL/PostgreSQL client
-SOURCE schema.sql;
-Insert Data: Execute the contents of data.sql to populate the tables with the provided sample data.
+## 📂 REPOSITORY ARTIFACTS
 
-SQL
+| File Name | Purpose | Key SQL Concepts Demonstrated |
+| :--- | :--- | :--- |
+| **`schema.sql`** | **Database Foundation:** Creates 5 normalized tables (`Authors`, `Books`, `Customers`, `Orders`, `OrderDetails`) with strict referential integrity. | **DDL**, **Foreign Keys**, `CHECK` Constraints |
+| **`data.sql`** | **Data Seeding:** Populates the schema with realistic sample data for immediate query testing and analysis. | **DML (INSERT)** |
+| **`queries.sql`** | **Analytical Engine:** A categorized suite of queries demonstrating everything from simple `SELECT` statements to complex data analysis. | **DQL**, Joins, Aggregation, Window Functions |
 
-SOURCE data.sql;
-Run Queries: Explore the various sections within queries.sql to see the database in action.
+-----
 
-Key Queries Overview
-The queries.sql file is structured into three sections, demonstrating a progression of SQL complexity:
+## ⚙️ GETTING STARTED (3-Step Setup)
 
-Section 1: Basic DDL, DML, and DQL
-This section covers fundamental operations for interacting with the database:
+To replicate and test this database environment:
 
-Retrieving all data from a table (SELECT *).
+1.  **Schema Creation:** Execute **`schema.sql`** to build the database and all tables.
+2.  **Data Population:** Execute **`data.sql`** to fill the tables with sample records.
+3.  **Query Execution:** Run sections of **`queries.sql`** in order to explore fundamental and advanced SQL capabilities.
 
-Inserting new records (INSERT INTO).
+-----
 
-Updating existing records (UPDATE...SET).
+## 📊 ANALYTICS SHOWCASE (from `queries.sql`)
 
-Deleting records (DELETE FROM).
+This project demonstrates the power of SQL for answering critical business questions:
 
-Section 2: Joins, Subqueries, and Aggregate Functions
-This section focuses on data analysis and combining information across multiple tables:
+### 1\. Customer Spending Rank (Using `RANK()` Window Function)
 
-Using JOIN to link Books and Authors.
+Finds the total money spent by each customer and assigns a rank based on spending, enabling targeted marketing campaigns.
 
-Calculating aggregate functions like SUM() (total revenue) and AVG() (average order value).
-
-Filtering grouped results using HAVING (e.g., finding customers with more than one order).
-
-Section 3: Window Functions, Views, and Advanced Queries
-The most advanced section, showcasing powerful SQL features for complex reporting:
-
-Creating a VIEW (GenreRevenue) for reusable reports.
-
-Using Window Functions like RANK() to determine revenue ranking per customer.
-
-Using ROW_NUMBER() with a PARTITION BY clause to rank sales within a specific group (e.g., by genre).
-
-Using Subqueries in the WHERE clause to filter orders based on the calculated average amount.
-
-Example: Revenue per Customer with Ranking
-The following query from queries.sql demonstrates the use of an aggregate function and a window function to rank customers by their total spending:
-
-SQL
-
+```sql
 SELECT C.Name, SUM(O.TotalAmount) AS TotalSpent,
 RANK() OVER (ORDER BY SUM(O.TotalAmount) DESC) AS Rank
 FROM Customers C
 JOIN Orders O ON C.CustomerID = O.CustomerID
 GROUP BY C.CustomerID;
+```
+
+### 2\. Genre-wise Revenue Tracking (Using a `VIEW`)
+
+Creates a persistent, reusable `VIEW` that summarizes total revenue aggregated by book genre.
+
+```sql
+CREATE VIEW GenreRevenue AS
+SELECT B.Genre, SUM(OD.Quantity * OD.PriceAtPurchase) AS Revenue
+FROM OrderDetails OD
+JOIN Books B ON OD.BookID = B.BookID
+GROUP BY B.Genre;
+```
+
 Contributing
 Feel free to fork the repository, suggest improvements to the schema or data, or add more complex queries.
 

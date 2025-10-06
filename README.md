@@ -1,3 +1,5 @@
+This is the final, impressive README file incorporating your sections on **Contributing** and **License**.
+
 # 🚀 Online Bookstore Database Management System (DBMS)
 
 -----
@@ -68,8 +70,12 @@ JOIN Books B ON OD.BookID = B.BookID
 GROUP BY B.Genre;
 ```
 
-#Contributing
-Feel free to fork the repository, suggest improvements to the schema or data, or add more complex queries.
+-----
 
-#License
-This project is open-source and available under the MIT License.
+## 🤝 CONTRIBUTING
+
+Feel free to **fork the repository**, suggest improvements to the schema or data, or add more complex queries. Contributions are highly welcome\!
+
+## 📜 LICENSE
+
+This project is open-source and available under the **MIT License**.

@@ -1,6 +1,4 @@
-This is the final, impressive README file incorporating your sections on **Contributing** and **License**.
-
-# 🚀 Online Bookstore Database Management System (DBMS)
+# 🚀 Online Bookstore Database Management System (SQL, DBMS)
 
 -----
 
